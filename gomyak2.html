@@ -18,12 +18,21 @@
     <div id="counter" class="coins"></div>
     <button onclick="incrementCounter(), Show(), changeImageSource()" class="vlad"><img src="lvls/lvl2.png" alt="Люблю путина" class="vlad_1" id="skin"></button>
     <div class="tap"></div>
-    <div class="main__menu"></div>
+    <div class="main__menu">
+        <button class="bot__btn"><img src="lvls/shop.png" alt="shop" class="btn__img"></button>
+        <button class="bot__btn"></button>
+        <button class="bot__btn" onclick="resetCounter()" ></button>
+    </div>
+
+    <!-- <input type="text" placeholder="ИМЯ" id="user__name" > -->
     
 </div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script>
+    // let tg = window.Telegram.WebApp;
+    // document.getElementById("user__name").value = tg.initDataUnsafe.user.first_name;
     const storedCount = parseInt(localStorage.getItem('s1') || '0', 10);
     let s1 = storedCount > 0 ? storedCount : 0;
 
@@ -35,39 +44,59 @@
         counter.innerHTML = s1;
     }
 
+
     function Show(){
-    const elementToShow = document.querySelector('.tap');
+    const elementToShow = document.querySelector('.vlad');
         function displayToggle(element) {
-            if (element.style.display === 'none') {
-                element.style.display = 'block';
+            if (element.style.width === '80%') {
+                element.style.width= '90%';
+                element.style.left= '5%';
+                element.style.height= '45vh';
+                element.style.top= '28%';
+                const soundElement = document.getElementById('sound-element');
+                soundElement.play();
                 setTimeout(() => {
-                    element.style.display = 'none';
-                }, 100);
+                    element.style.width = '80%';
+                    element.style.left= '10%';
+                    element.style.height= '40vh';
+                    element.style.top= '30%';
+                }, 50);
             } else {
-                element.style.display = 'none';
+                element.style.width = '80%';
             }
         }
         
         displayToggle(elementToShow);
     }
 
+
     let currentSrc = 'lvls/lvl1.png';
 
     function changeImageSource() {
-        if (s1 > 500) {
-            const imageElement = document.getElementById('skin');
-            currentSrc = 'lvls/lvl2.png';
-            imageElement.src = currentSrc;}
-        
-        if (s1 > 1000){
-            const imageElement = document.getElementById('skin');
-            currentSrc = 'lvls/lvl3.png';
-            imageElement.src = currentSrc;}
+    const imageElement = document.getElementById('skin');
+    if (s1 <= 50) {
+        currentSrc = 'lvls/lvl1.png';
+        imageElement.src = currentSrc;
+    } else if (s1 > 50 && s1 <= 100) {
+        currentSrc = 'lvls/lvl2.png';
+        imageElement.src = currentSrc;
+    } else if (s1 > 100) {
+        currentSrc = 'lvls/lvl3.png';
+        imageElement.src = currentSrc;
+    }
+    }
+
+    function resetCounter() {
+    localStorage.removeItem('s1');
+    s1 = 0;
+    counter.innerHTML = s1;
     }
 
         // Устанавливаем начальное значение счетчика в div
     counter.innerHTML = s1;
 </script>
+
+<audio id="sound-element" src="sound1.mp3" type="audio/mp3"></audio>
 
 </body>
 </html>
